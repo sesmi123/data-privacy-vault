@@ -15,7 +15,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.decode(), 'Hello, World!')
 
-    @mock.patch("data_privacy_vault.app.tokenization_service")
+    @mock.patch("data_privacy_vault.app_controller.tokenization_service")
     def test_tokenize_endpoint(self, tokenization_service_mock):
 
         # Arrange
@@ -41,7 +41,7 @@ class TestApp(unittest.TestCase):
         }
         self.assertEqual(json.loads(response.data), expected_response)
 
-    @mock.patch("data_privacy_vault.app.tokenization_service")
+    @mock.patch("data_privacy_vault.app_controller.tokenization_service")
     def test_detokenize_endpoint(self, tokenization_service_mock):
 
         # Arrange
