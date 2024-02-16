@@ -1,7 +1,17 @@
 from flask import jsonify
+from data_privacy_vault import config
+from data_privacy_vault.redis_connection import RedisConnection
 from data_privacy_vault.tokenization_service import TokenizationService
 
-tokenization_service = TokenizationService()
+redis_config = {
+    "host": config.redis["host"],
+    "port": config.redis["port"],
+    "db": config.redis["db"],
+}
+redis_conn = RedisConnection(**redis_config)
+redis_conn.connect()
+
+tokenization_service = TokenizationService(redis_conn)
 
 
 def tokenize_request(data):
