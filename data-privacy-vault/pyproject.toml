@@ -11,6 +11,7 @@ flask = "^3.0.2"
 pytest = "^8.0.0"
 requests = "^2.31.0"
 redis = "^5.0.1"
+fernet = "^1.0.1"
 
 
 [build-system]
