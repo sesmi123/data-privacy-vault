@@ -17,40 +17,45 @@ tokenization_service = TokenizationService(redis_conn)
 class ApplicationController():
 
     def tokenize_request(self, data):
-        # Check if request payload is valid
-        if not data or 'id' not in data or 'data' not in data:
-            return jsonify({'error': 'Invalid request payload'}), 400
-        
-        req_id = data['id']
-        fields_data = data['data']
-        
-        # Tokenize each field value
-        tokenized_data = {}
-        for field, value in fields_data.items():
-            tokenized_data[field] = tokenization_service.tokenize(value)
-        
-        # Construct the response payload
-        response_payload = {'id': req_id, 'data': tokenized_data}
-        
-        return jsonify(response_payload), 201
-
+        try:
+            # Check if request payload is valid
+            if not data or 'id' not in data or 'data' not in data:
+                return jsonify({'error': 'Invalid request payload'}), 400
+            
+            req_id = data['id']
+            fields_data = data['data']
+            
+            # Tokenize each field value
+            tokenized_data = {}
+            for field, value in fields_data.items():
+                tokenized_data[field] = tokenization_service.tokenize(value)
+            
+            # Construct the response payload
+            response_payload = {'id': req_id, 'data': tokenized_data}
+            
+            return jsonify(response_payload), 201
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
 
     def detokenize_request(self, data):
-        # Check if request payload is valid
-        if not data or 'id' not in data or 'data' not in data:
-            return jsonify({'error': 'Invalid request payload'}), 400
-        
-        req_id = data['id']
-        fields_data = data['data']
-        
-        # Tokenize each field value
-        detokenized_data = {}
-        for field, value in fields_data.items():
-            detokenized_value = tokenization_service.detokenize(value)
-            detokenized_data[field] = {"found": detokenized_value != "Token not found", 
-                                    "value": detokenized_value if detokenized_value != "Token not found" else ""}
+        try:
+            # Check if request payload is valid
+            if not data or 'id' not in data or 'data' not in data:
+                return jsonify({'error': 'Invalid request payload'}), 400
+            
+            req_id = data['id']
+            fields_data = data['data']
+            
+            # Tokenize each field value
+            detokenized_data = {}
+            for field, value in fields_data.items():
+                detokenized_value = tokenization_service.detokenize(value)
+                detokenized_data[field] = {"found": detokenized_value != "Token not found", 
+                                        "value": detokenized_value if detokenized_value != "Token not found" else ""}
 
-        # Construct the response payload
-        response_payload = {'id': req_id, 'data': detokenized_data}
-        
-        return jsonify(response_payload), 200
+            # Construct the response payload
+            response_payload = {'id': req_id, 'data': detokenized_data}
+            
+            return jsonify(response_payload), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
