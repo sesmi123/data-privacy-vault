@@ -7,6 +7,12 @@ Data persistence: Redis
 
 Data encryption: Fernet symmetric key encryption
 
+Programming Language: Python
+
+Framework: Flask
+
+Auth: Basic Auth
+
 
 ## Local setup
 
@@ -29,6 +35,7 @@ Data encryption: Fernet symmetric key encryption
     **Note**: Authentication in redis is not supported as of now. However, it can be considered for implementation as a potential enhancement in the future.
 
 2. Configure your redis connection in `config.py`
+
 3. Configure the key used for Fernet encryption and decryption in the `config.py`. The key must be 32 url-safe base64-encoded bytes.
 
     To generate a key run the following in your Python interactive shell:
@@ -36,6 +43,7 @@ Data encryption: Fernet symmetric key encryption
     from cryptography.fernet import Fernet
     Fernet.generate_key()
     ```
+
 4. Create a virtual environment and install dependencies.
 
     Run `pip install poetry` if required.
@@ -63,3 +71,9 @@ Data encryption: Fernet symmetric key encryption
 ## Kubernetes Setup
 
 **TODO**
+
+## Going Further
+
+- Integrate with a key management system like Azure Keyvault to keep the cryptographic keys secure.
+
+- Extend the authentication to integrate with common identity and access management solutions.

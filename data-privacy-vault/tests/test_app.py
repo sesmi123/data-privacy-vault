@@ -1,6 +1,8 @@
+import base64
 import json
 import unittest
 from unittest import mock
+from data_privacy_vault import config
 from data_privacy_vault.app import app
 
 class TestApp(unittest.TestCase):
@@ -8,6 +10,8 @@ class TestApp(unittest.TestCase):
     def setUp(self):
         app.testing = True
         self.app = app.test_client()
+        auth = f"{config.auth['username']}:{config.auth['password']}"
+        self.app.environ_base['HTTP_AUTHORIZATION'] = f"Basic {base64.b64encode(auth.encode('utf-8')).decode('utf-8')}"
 
     def test_hello_endpoint(self):
         response = self.app.get('/hello')
