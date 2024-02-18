@@ -13,6 +13,8 @@ Framework: Flask
 
 Auth: Basic Auth
 
+![Concept Diagram](./Concept%20Diagram.drawio.png)
+
 
 ## Local setup
 
