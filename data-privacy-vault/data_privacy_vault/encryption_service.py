@@ -1,5 +1,8 @@
 from fernet import Fernet
 
+class EncryptionException(Exception):
+    pass
+
 class EncryptionService():
 
     def __init__(self, symmetric_key: str) -> None:
@@ -10,4 +13,7 @@ class EncryptionService():
         return self.cipher_suite.encrypt(data)
 
     def decrypt(self, data):
-        return self.cipher_suite.decrypt(data)
+        try:
+            return self.cipher_suite.decrypt(data)
+        except:
+            raise EncryptionException("Failed to decrypt the value")
